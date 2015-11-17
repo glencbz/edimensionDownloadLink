@@ -2,7 +2,7 @@
 
 In all seriousness, this is a pretty hacky script. It works well enough for me, but I suggest that you don't get your hopes up too high. I've tried my best to work around eDimension, but I can only manage so much.
 
-*Works best in Chrome*
+**Works best in Chrome**
 
 ###Requires
 
