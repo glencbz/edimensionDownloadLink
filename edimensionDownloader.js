@@ -49,6 +49,7 @@ function requestAppend(anchor){
 	        	var style = "color:orange";
 	        	var innerHTML = "Pop up";
 	        }
+	        style = style + "; margin-left: 10%;";
 			// var parser = new DOMParser();
 			// var doc = parser.parseFromString(response.responseText.substring(tagStart,tagEnd), "text/html");
 			// // console.log(doc);
