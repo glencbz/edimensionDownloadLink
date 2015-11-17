@@ -8,7 +8,7 @@ In all seriousness, this is a pretty hacky script. It works well enough for me, 
 - [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en) for Chrome
 
 ###Download
-Hosted on [Github Gist](https://gist.github.com/glencbz/deade9e2eb1798eaa680/raw/03b13b71c896c26868c1851ccf7050b6b6584b6c/edimensionDownload.user.js)
+Hosted on [Github Gist](https://gist.github.com/glencbz/deade9e2eb1798eaa680/raw/65be54b001141d97d990c8bcc19bdd95d4739139/edimensionDownload.user.js)
 
 ###Tested on:
 - Chrome for Mac
