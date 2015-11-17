@@ -26,24 +26,37 @@ var requestHeaders = {
 };
 var anchors = $(".mod-indent>a");
 function requestAppend(anchor){
-GM_xmlhttpRequest({
+	// console.log(anchors[i].href);
+	GM_xmlhttpRequest({
 		method: "get",
 		headers: requestHeaders,
 		url: anchors[i].href,
 		onreadystatechange: function(response){
 	        if (response.readyState != 4)
 	            return;
-	        // console.log(response.responseText);
 	        var tagStart = response.responseText.indexOf("<object");
-	        var tagEnd = response.responseText.indexOf("</object>") + "</object>".length;
-			var parser = new DOMParser();
-			var doc = parser.parseFromString(response.responseText.substring(tagStart,tagEnd), "text/html");
-			// console.log(doc);
-			var node = doc.getElementById("resourceobject");
+	        if (tagStart !== -1){
+	        	var tagEnd = response.responseText.indexOf("</object>") + "</object>".length;
+	        	var urlStart = response.responseText.indexOf('data="', tagStart) + 'data="'.length;
+	        	var urlEnd = response.responseText.indexOf('"', urlStart) + '"'.length;
+	        	var style = "color:green";
+	        	var innerHTML = "Download";
+	        }
+	        else{
+	        	var outerTagStart = response.responseText.indexOf("resourceworkaround");
+	        	var urlStart = response.responseText.indexOf('href="', outerTagStart) + 'href="'.length;
+	        	var urlEnd = response.responseText.indexOf('"', urlStart);
+	        	var style = "color:orange";
+	        	var innerHTML = "Pop up";
+	        }
+			// var parser = new DOMParser();
+			// var doc = parser.parseFromString(response.responseText.substring(tagStart,tagEnd), "text/html");
+			// // console.log(doc);
+			// var node = doc.getElementById("resourceobject");
 			// console.log(node);
-			var resourceUrl = node.data;
+			var resourceUrl = response.responseText.substring(urlStart, urlEnd);
 			// console.log(resourceUrl);
-			anchor.append('<a href=' + resourceUrl + " download=" + resourceUrl + " style=color:green> Download </a>");
+			anchor.append('<a href=' + resourceUrl + ' download target="_blank" style='+ style + '>'+ innerHTML+'</a>');
 		},
 	});	
 }
