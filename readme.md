@@ -13,6 +13,6 @@ In all seriousness, this is a pretty hacky script. It works well enough for me, 
 
 ###Download
 Hosted on [Github User Pages](http://glencbz.github.io/Assets/edimensionDownloader.user.js)
-
+[Alt](edimensionDownloader.user.js)
 ###Tested on:
 - Chrome
