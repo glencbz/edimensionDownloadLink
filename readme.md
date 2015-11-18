@@ -1,4 +1,6 @@
-![screenshot](https://raw.githubusercontent.com/glencbz/glencbz.github.io/master/Assets/download-links.png)
+>![screenshot](https://raw.githubusercontent.com/glencbz/glencbz.github.io/master/Assets/download-links.png)
+
+
 ###It adds download links to eDimension whattttttt
 
 In all seriousness, this is a pretty hacky script. It works well enough for me, but I suggest that you don't get your hopes up too high. I've tried my best to work around eDimension, but I can only manage so much.
