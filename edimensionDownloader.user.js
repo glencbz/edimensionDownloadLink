@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eDimension Download Link
 // @namespace    https://github.com/glencbz/edimensionDownloadLink
-// @version      0.83
+// @version      0.84
 // @description  Adds a download link for eDimension
 // @author       Glen Choo
 // @match        http://edimension.sutd.edu.sg/course/view.php?id=*
@@ -37,7 +37,7 @@ function requestAppend(anchor, i){
 	        if (tagStart !== -1){
 	        	var tagEnd = response.responseText.indexOf("</object>") + "</object>".length;
 	        	var urlStart = response.responseText.indexOf('data="', tagStart) + 'data="'.length;
-	        	var urlEnd = response.responseText.indexOf('"', urlStart) + '"'.length;
+	        	var urlEnd = response.responseText.indexOf('"', urlStart);
 	        	var style = "color:green";
 	        	var innerHTML = "Download";
 	        }
