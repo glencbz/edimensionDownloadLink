@@ -5,6 +5,10 @@
 In all seriousness, this is a pretty hacky script. It works well enough for me, but I suggest that you don't get your hopes up too high. I've tried my best to work around eDimension, but I can only manage so much.
 
 **Works best in Chrome**
+###Essentials
+- Creates links from bottom to top (I assume you're probably downloading the latest stuff)
+- Tends to lag on a slow Internet (sorry)
+- Links don't always work immediately (but there's a neat little progress bar that tells you when everything will be ok!)
 
 ###Requires
 
