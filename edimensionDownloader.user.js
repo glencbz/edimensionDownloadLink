@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eDimension Download Link
 // @namespace    https://github.com/glencbz/edimensionDownloadLink
-// @version      0.81
+// @version      0.82
 // @description  Adds a download link for eDimension
 // @author       Glen Choo
 // @match        http://edimension.sutd.edu.sg/course/view.php?id=*
@@ -75,7 +75,8 @@ for (var i = anchors.length - 1; i >= 0; i--){
 		requestNums += 1;
 }
 
-for (var i = anchors.length - 1; i >= 0; i--){
+var i = anchors.length;
+var requestInterval = window.setInterval(function(){
 	try{
 		var $anchor = $(anchors[i]);
 		if ($anchor.children("img").attr("src") == "http://edimension.sutd.edu.sg/theme/image.php/campus/core/1434085985/f/pdf"){
@@ -85,4 +86,19 @@ for (var i = anchors.length - 1; i >= 0; i--){
 	catch (err){
 		console.log(err);
 	}
-}
+	i--;
+	if (i < 0)
+		window.clearInterval(requestInterval);
+}, 100);
+
+// for (var i = anchors.length - 1; i >= 0; i--){
+// 	try{
+// 		var $anchor = $(anchors[i]);
+// 		if ($anchor.children("img").attr("src") == "http://edimension.sutd.edu.sg/theme/image.php/campus/core/1434085985/f/pdf"){
+// 			requestAppend($anchor);
+// 		}
+// 	}
+// 	catch (err){
+// 		console.log(err);
+// 	}
+// }
