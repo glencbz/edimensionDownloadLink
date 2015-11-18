@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         eDimension Download Link
 // @namespace    https://github.com/glencbz/edimensionDownloadLink
-// @version      0.84
+// @version      0.9
 // @description  Adds a download link for eDimension
 // @author       Glen Choo
 // @match        http://edimension.sutd.edu.sg/course/view.php?id=*
 // @grant       GM_addStyle
 // @grant       GM_xmlhttpRequest
-// @require http://code.jquery.com/jquery-latest.js
+// @require 	http://code.jquery.com/jquery-latest.js
 // ==/UserScript==
 /* jshint -W097 */
 'use strict';
@@ -45,8 +45,10 @@ function requestAppend(anchor, i){
 	        	var outerTagStart = response.responseText.indexOf("resourceworkaround");
 	        	var urlStart = response.responseText.indexOf('href="', outerTagStart) + 'href="'.length;
 	        	var urlEnd = response.responseText.indexOf('"', urlStart);
-	        	var style = "color:orange";
-	        	var innerHTML = "Pop up";
+	        	// var style = "color:orange";
+	        	// var innerHTML = "Pop up";
+	        	var style = "color:green";
+	        	var innerHTML = "Download";
 	        }
 
 			var resourceUrl = response.responseText.substring(urlStart, urlEnd);
@@ -100,6 +102,8 @@ function anchorCheck(){
 }
 
 var requestInterval = window.setInterval(anchorCheck, 1000);
+
+$(".mod-indent>a").prop("onclick", null);
 // var debugInterval = window.setInterval(function(){
 // 	console.log(requestInterval);
 // }, 100);
