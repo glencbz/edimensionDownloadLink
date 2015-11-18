@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eDimension Download Link
 // @namespace    https://github.com/glencbz/edimensionDownloadLink
-// @version      0.82
+// @version      0.83
 // @description  Adds a download link for eDimension
 // @author       Glen Choo
 // @match        http://edimension.sutd.edu.sg/course/view.php?id=*
@@ -25,11 +25,11 @@ var requestHeaders = {
 	"Cookie": document.cookie,
 };
 var anchors = $(".mod-indent>a");
-function requestAppend(anchor){
+function requestAppend(anchor, i){
 	GM_xmlhttpRequest({
 		method: "get",
 		headers: requestHeaders,
-		url: anchors[i].href,
+		url: anchor.attr("href"),
 		onreadystatechange: function(response){
 	        if (response.readyState != 4)
 	            return;
@@ -50,7 +50,14 @@ function requestAppend(anchor){
 	        }
 
 			var resourceUrl = response.responseText.substring(urlStart, urlEnd);
-			anchor.append('<a href=' + resourceUrl + ' download target="_blank" style='+ style + ' class="download-link">'+ innerHTML+'</a>');
+			anchor.append('<a href=' + resourceUrl + ' download target="_blank" style='+ style + ' class="download-link download' + i + '">' + innerHTML+'</a>');
+			$(".download" + i).click(function(){
+				window.clearInterval(requestInterval);
+				window.setTimeout(function(){
+					requestInterval = window.setInterval(anchorCheck, 100);
+				}, 3000);
+			});
+
 			progress += 1;
 			$(".progress-bar-front").css("width", (progress/requestNums) * 100 + "%" );
 			if (progress === requestNums){
@@ -76,11 +83,12 @@ for (var i = anchors.length - 1; i >= 0; i--){
 }
 
 var i = anchors.length;
-var requestInterval = window.setInterval(function(){
+function anchorCheck(){
+	console.log(i);
 	try{
 		var $anchor = $(anchors[i]);
 		if ($anchor.children("img").attr("src") == "http://edimension.sutd.edu.sg/theme/image.php/campus/core/1434085985/f/pdf"){
-			requestAppend($anchor);
+			requestAppend($anchor, i);
 		}
 	}
 	catch (err){
@@ -89,7 +97,12 @@ var requestInterval = window.setInterval(function(){
 	i--;
 	if (i < 0)
 		window.clearInterval(requestInterval);
-}, 100);
+}
+
+var requestInterval = window.setInterval(anchorCheck, 1000);
+// var debugInterval = window.setInterval(function(){
+// 	console.log(requestInterval);
+// }, 100);
 
 // for (var i = anchors.length - 1; i >= 0; i--){
 // 	try{
