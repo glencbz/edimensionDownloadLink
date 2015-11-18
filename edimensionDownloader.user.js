@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         New Userscript
-// @namespace    http://tampermonkey.net/
+// @name         eDimension Download Link
+// @namespace    https://github.com/glencbz/edimensionDownloadLink
 // @version      0.1
-// @description  try to take over the world!
-// @author       You
+// @description  Adds a download link for eDimension
+// @author       Glen Choo
 // @match        http://edimension.sutd.edu.sg/course/view.php?id=*
 // @grant       GM_addStyle
 // @grant       GM_xmlhttpRequest
@@ -62,7 +62,7 @@ function requestAppend(anchor){
 		},
 	});	
 }
-for (var i = 0; i < anchors.length; i++){
+for (var i = anchors.length - 1; i >= 0; i--){
 	try{
 		var $anchor = $(anchors[i]);
 		if ($anchor.children("img").attr("src") == "http://edimension.sutd.edu.sg/theme/image.php/campus/core/1434085985/f/pdf"){
