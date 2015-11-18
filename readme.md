@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/glencbz/glencbz.github.io/master/Assets/download-links.png" alt="screenshot" style="width: 50%;"/>
+<img src="https://raw.githubusercontent.com/glencbz/glencbz.github.io/master/Assets/download-links.png" alt="screenshot" width="50%;"/>
 
 >![screenshot](https://raw.githubusercontent.com/glencbz/glencbz.github.io/master/Assets/download-links.png)
 
