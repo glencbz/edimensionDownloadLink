@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eDimension Download Link
 // @namespace    https://github.com/glencbz/edimensionDownloadLink
-// @version      0.1
+// @version      0.81
 // @description  Adds a download link for eDimension
 // @author       Glen Choo
 // @match        http://edimension.sutd.edu.sg/course/view.php?id=*
@@ -26,7 +26,6 @@ var requestHeaders = {
 };
 var anchors = $(".mod-indent>a");
 function requestAppend(anchor){
-	// console.log(anchors[i].href);
 	GM_xmlhttpRequest({
 		method: "get",
 		headers: requestHeaders,
@@ -49,19 +48,33 @@ function requestAppend(anchor){
 	        	var style = "color:orange";
 	        	var innerHTML = "Pop up";
 	        }
-	        style = style + ";margin-left:2%";
 
-			// var parser = new DOMParser();
-			// var doc = parser.parseFromString(response.responseText.substring(tagStart,tagEnd), "text/html");
-			// // console.log(doc);
-			// var node = doc.getElementById("resourceobject");
-			// console.log(node);
 			var resourceUrl = response.responseText.substring(urlStart, urlEnd);
-			// console.log(resourceUrl);
-			anchor.append('<a href=' + resourceUrl + ' download target="_blank" style='+ style + '>'+ innerHTML+'</a>');
+			anchor.append('<a href=' + resourceUrl + ' download target="_blank" style='+ style + ' class="download-link">'+ innerHTML+'</a>');
+			progress += 1;
+			$(".progress-bar-front").css("width", (progress/requestNums) * 100 + "%" );
+			if (progress === requestNums){
+				$(".progress-bar-back").remove();
+				$(".progress-bar-front").remove();
+			}
 		},
 	});	
 }
+$("head").append('<style type="text/css"> .download-link {margin-left:2%;}</style>');
+$("head").append('<style type="text/css"> .progress-bar-back {position: fixed; width: 10%; top: 0; right: 0; background-color: #E0E0E0;}</style>');
+$("head").append('<style type="text/css"> .progress-bar-front {position: relative; width: 0%; background-color: #4AC74A;}</style>');
+$("head").append('<style type="text/css"> .progress-bar {height: 20px; border-radius: 3px; transition: ease-in 0.1s;}</style>');
+
+$("body").append('<div class="progress-bar-back progress-bar"></div>');
+$(".progress-bar-back").append('<div class="progress-bar-front progress-bar"></div>');
+
+var progress = 0;
+var requestNums = 0;
+for (var i = anchors.length - 1; i >= 0; i--){
+	if ($(anchors[i]).children("img").attr("src") == "http://edimension.sutd.edu.sg/theme/image.php/campus/core/1434085985/f/pdf")
+		requestNums += 1;
+}
+
 for (var i = anchors.length - 1; i >= 0; i--){
 	try{
 		var $anchor = $(anchors[i]);
@@ -73,4 +86,3 @@ for (var i = anchors.length - 1; i >= 0; i--){
 		console.log(err);
 	}
 }
-
