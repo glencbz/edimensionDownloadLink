@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eDimension Download Link
 // @namespace    https://github.com/glencbz/edimensionDownloadLink
-// @version      0.9
+// @version      0.91
 // @description  Adds a download link for eDimension
 // @author       Glen Choo
 // @match        http://edimension.sutd.edu.sg/course/view.php?id=*
@@ -33,6 +33,8 @@ function requestAppend(anchor, i){
 		onreadystatechange: function(response){
 	        if (response.readyState != 4)
 	            return;
+	        if (--i >= 0)
+		        anchorCheck(i);
 	        var tagStart = response.responseText.indexOf("<object");
 	        if (tagStart !== -1){
 	        	var tagEnd = response.responseText.indexOf("</object>") + "</object>".length;
@@ -53,12 +55,6 @@ function requestAppend(anchor, i){
 
 			var resourceUrl = response.responseText.substring(urlStart, urlEnd);
 			anchor.append('<a href=' + resourceUrl + ' download target="_blank" style='+ style + ' class="download-link download' + i + '">' + innerHTML+'</a>');
-			$(".download" + i).click(function(){
-				window.clearInterval(requestInterval);
-				window.setTimeout(function(){
-					requestInterval = window.setInterval(anchorCheck, 100);
-				}, 3000);
-			});
 
 			progress += 1;
 			$(".progress-bar-front").css("width", (progress/requestNums) * 100 + "%" );
@@ -85,23 +81,21 @@ for (var i = anchors.length - 1; i >= 0; i--){
 }
 
 var i = anchors.length;
-function anchorCheck(){
-	console.log(i);
+function anchorCheck(i){
 	try{
 		var $anchor = $(anchors[i]);
 		if ($anchor.children("img").attr("src") == "http://edimension.sutd.edu.sg/theme/image.php/campus/core/1434085985/f/pdf"){
 			requestAppend($anchor, i);
+		}else{
+			anchorCheck(--i);
 		}
 	}
 	catch (err){
 		console.log(err);
 	}
-	i--;
-	if (i < 0)
-		window.clearInterval(requestInterval);
 }
 
-var requestInterval = window.setInterval(anchorCheck, 1000);
+anchorCheck(i);
 
 $(".mod-indent>a").prop("onclick", null);
 // var debugInterval = window.setInterval(function(){
