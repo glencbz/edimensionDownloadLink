@@ -2,7 +2,9 @@
 
 ###It adds download links to eDimension whattttttt
 
-In all seriousness, this is a pretty hacky script. It works well enough for me, but I suggest that you don't get your hopes up too high. I've tried my best to work around eDimension, but I can only manage so much.
+If you like this, check check out some other stuff I did for eDimension
+- [eDimensionReverser](https://github.com/glencbz/edimensionReverser) Changes the order of the course page and highlights your current courses
+-[eDimensionWeekMover](https://github.com/glencbz/eDimensionWeekMover) Copies the current week's materials to the top and highlights it in a different colour
 
 **Works best in Chrome**
 ###Essentials
