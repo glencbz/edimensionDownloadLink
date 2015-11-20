@@ -37,7 +37,7 @@ function requestAppend(anchor, i){
 		        anchorCheck(i);
 	        var tagStart = response.responseText.indexOf("<object");
 	        if (tagStart !== -1){
-	        	var tagEnd = response.responseText.indexOf("</object>") + "</object>".length;
+	        	var tagEnd = response.responseText.indexOf("</object>", tagStart) + "</object>".length;
 	        	var urlStart = response.responseText.indexOf('data="', tagStart) + 'data="'.length;
 	        	var urlEnd = response.responseText.indexOf('"', urlStart);
 	        	var style = "color:green";
@@ -54,7 +54,8 @@ function requestAppend(anchor, i){
 	        }
 
 			var resourceUrl = response.responseText.substring(urlStart, urlEnd);
-			anchor.append('<a href=' + resourceUrl + ' download target="_blank" style='+ style + ' class="download-link download' + i + '">' + innerHTML+'</a>');
+			var matchingAnchors = $("a[href='" + anchor.attr('href') + "']");
+			matchingAnchors.append('<a href=' + resourceUrl + ' download target="_blank" style='+ style + ' class="download-link download' + i + '">' + innerHTML+'</a>');
 
 			progress += 1;
 			$(".progress-bar-front").css("width", (progress/requestNums) * 100 + "%" );
@@ -66,7 +67,7 @@ function requestAppend(anchor, i){
 	});	
 }
 $("head").append('<style type="text/css"> .download-link {margin-left:2%;}</style>');
-$("head").append('<style type="text/css"> .progress-bar-back {position: fixed; width: 10%; top: 0; right: 0; background-color: #E0E0E0;}</style>');
+$("head").append('<style type="text/css"> .progress-bar-back {position: fixed; width: 13%; top: 0; right: 0; background-color: #E0E0E0;}</style>');
 $("head").append('<style type="text/css"> .progress-bar-front {position: relative; width: 0%; background-color: #4AC74A;}</style>');
 $("head").append('<style type="text/css"> .progress-bar {height: 20px; border-radius: 3px; transition: ease-in 0.1s;}</style>');
 
@@ -98,18 +99,3 @@ function anchorCheck(i){
 anchorCheck(i);
 
 $(".mod-indent>a").prop("onclick", null);
-// var debugInterval = window.setInterval(function(){
-// 	console.log(requestInterval);
-// }, 100);
-
-// for (var i = anchors.length - 1; i >= 0; i--){
-// 	try{
-// 		var $anchor = $(anchors[i]);
-// 		if ($anchor.children("img").attr("src") == "http://edimension.sutd.edu.sg/theme/image.php/campus/core/1434085985/f/pdf"){
-// 			requestAppend($anchor);
-// 		}
-// 	}
-// 	catch (err){
-// 		console.log(err);
-// 	}
-// }
