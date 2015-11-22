@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eDimension Download Link
 // @namespace    https://github.com/glencbz/edimensionDownloadLink
-// @version      0.91
+// @version      0.92
 // @description  Adds a download link for eDimension
 // @author       Glen Choo
 // @match        http://edimension.sutd.edu.sg/course/view.php?id=*
@@ -55,7 +55,12 @@ function requestAppend(anchor, i){
 
 			var resourceUrl = response.responseText.substring(urlStart, urlEnd);
 			var matchingAnchors = $("a[href='" + anchor.attr('href') + "']");
-			matchingAnchors.append('<a href=' + resourceUrl + ' download target="_blank" style='+ style + ' class="download-link download' + i + '">' + innerHTML+'</a>');
+			matchingAnchors.each(function(i, anchor){
+					var $anchor = $(anchor);
+					if ($anchor.find(".download-link").length === 0)
+						$anchor.append('<a href=' + resourceUrl + ' download target="_blank" style='+ style + ' class="download-link download' + i + '">' + innerHTML+'</a>');
+				}
+			);
 
 			progress += 1;
 			$(".progress-bar-front").css("width", (progress/requestNums) * 100 + "%" );
@@ -69,7 +74,7 @@ function requestAppend(anchor, i){
 $("head").append('<style type="text/css"> .download-link {margin-left:2%;}</style>');
 $("head").append('<style type="text/css"> .progress-bar-back {position: fixed; width: 13%; top: 0; right: 0; background-color: #E0E0E0;}</style>');
 $("head").append('<style type="text/css"> .progress-bar-front {position: relative; width: 0%; background-color: #4AC74A;}</style>');
-$("head").append('<style type="text/css"> .progress-bar {height: 20px; border-radius: 3px; transition: ease-in 0.1s;}</style>');
+$("head").append('<style type="text/css"> .progress-bar {height: 25px; border-radius: 3px; transition: ease-in 0.1s;}</style>');
 
 $("body").append('<div class="progress-bar-back progress-bar"></div>');
 $(".progress-bar-back").append('<div class="progress-bar-front progress-bar"></div>');
@@ -88,7 +93,8 @@ function anchorCheck(i){
 		if ($anchor.children("img").attr("src") == "http://edimension.sutd.edu.sg/theme/image.php/campus/core/1434085985/f/pdf"){
 			requestAppend($anchor, i);
 		}else{
-			anchorCheck(--i);
+			if(--i >= 0)
+				anchorCheck(i);
 		}
 	}
 	catch (err){
