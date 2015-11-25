@@ -13,6 +13,7 @@
 'use strict';
  
 var $ = window.jQuery;
+$(function{
 var requestHeaders = {
 	"Host": "edimension.sutd.edu.sg",
 	"Connection": "keep-alive",
@@ -105,3 +106,4 @@ function anchorCheck(i){
 anchorCheck(i);
 
 $(".mod-indent>a").prop("onclick", null);
+});
