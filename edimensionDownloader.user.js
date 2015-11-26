@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eDimension Download Link
 // @namespace    https://github.com/glencbz/edimensionDownloadLink
-// @version      0.92
+// @version      0.93
 // @description  Adds a download link for eDimension
 // @author       Glen Choo
 // @match        http://edimension.sutd.edu.sg/course/view.php?id=*
@@ -13,7 +13,7 @@
 'use strict';
  
 var $ = window.jQuery;
-$(function{
+$(function(){
 var requestHeaders = {
 	"Host": "edimension.sutd.edu.sg",
 	"Connection": "keep-alive",
@@ -36,25 +36,18 @@ function requestAppend(anchor, i){
 	            return;
 	        if (--i >= 0)
 		        anchorCheck(i);
-	        var tagStart = response.responseText.indexOf("<object");
-	        if (tagStart !== -1){
-	        	var tagEnd = response.responseText.indexOf("</object>", tagStart) + "</object>".length;
-	        	var urlStart = response.responseText.indexOf('data="', tagStart) + 'data="'.length;
-	        	var urlEnd = response.responseText.indexOf('"', urlStart);
-	        	var style = "color:green";
-	        	var innerHTML = "Download";
-	        }
-	        else{
-	        	var outerTagStart = response.responseText.indexOf("resourceworkaround");
-	        	var urlStart = response.responseText.indexOf('href="', outerTagStart) + 'href="'.length;
-	        	var urlEnd = response.responseText.indexOf('"', urlStart);
-	        	// var style = "color:orange";
-	        	// var innerHTML = "Pop up";
-	        	var style = "color:green";
-	        	var innerHTML = "Download";
-	        }
-
-			var resourceUrl = response.responseText.substring(urlStart, urlEnd);
+		    var responseDom = $.parseHTML(response.responseText);
+	        var $responseDom = $(responseDom);
+	        var objectNode = $responseDom.find("object");
+	        var resourceUrl;
+	        if (objectNode.length > 1) 
+	        	resourceUrl = objectNode.attr("href")
+	        
+	        else
+	        	resourceUrl = $(".resourceworkaround>a").attr("href");
+	        
+        	var style = "color:green";
+        	var innerHTML = "Download";
 			var matchingAnchors = $("a[href='" + anchor.attr('href') + "']");
 			matchingAnchors.each(function(i, anchor){
 					var $anchor = $(anchor);
